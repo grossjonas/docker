@@ -1,0 +1,15 @@
+syncthing:
+  build: .
+  ports:
+    - "8384:8384"
+    - "22000:2200"
+    - "21026:21026/udp"
+    - "22026:22026"
+  volumes:
+    - ./Sync:/home/syncthing/Sync
+    - ./config:/home/syncthing/.config
+    - ./syncthing.sh:/syncthing.sh
+  environment:
+    password: test
+    username: test
+

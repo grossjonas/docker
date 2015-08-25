@@ -1,0 +1,8 @@
+FROM httpd:2.4.10
+MAINTAINER Jonas Groß <gross.jonas@gmail.com>
+
+RUN echo "#!/bin/bash" > /start.sh; \
+  echo "service apache2 start;" >> /start.sh; \
+  echo "bash" >> /start.sh
+RUN chmod +x /start.sh
+ENTRYPOINT ["/start.sh"]

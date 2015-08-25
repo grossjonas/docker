@@ -1,0 +1,8 @@
+=============== Aug 25, 2015 (UTC) ===============
+18:52:47.786761 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+18:52:47.786994 db@open opening
+18:52:47.787060 journal@recovery F·1
+18:52:47.791503 journal@recovery recovering @12
+18:52:47.805241 mem@flush created L0@14 N·3 S·246B "\x00de..est,v2":"\x02de..est,v1"
+18:52:47.810644 db@janitor F·3 G·0
+18:52:47.810686 db@open done T·23.661574ms
