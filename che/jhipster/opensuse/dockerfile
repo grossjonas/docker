@@ -1,4 +1,4 @@
-FROM opensuse:42.1
+FROM opensuse
 
 RUN zypper install --no-confirm \
   java-1_8_0-openjdk-devel \
@@ -10,16 +10,12 @@ RUN npm install --global bower yo gulp-cli generator-jhipster
 
 RUN \
   groupadd user && \
-  useradd user -s /bin/bash -m -g user && \
+  useradd user -s /bin/bash -m -g wheel && \
   chown -R user:user /home/user
 
 RUN \
-  echo "" >> /home/user/.bashrc && \
-  echo "export JAVA_HOME=/etc/alternatives/java_sdk" >> /home/user/.bashrc
-
-RUN \
   mkdir /projects && \
-  chown user:user /projects
+  chown user:wheel /projects
 
 RUN \
   zypper install --no-confirm \
@@ -27,10 +23,36 @@ RUN \
     sudo
 
 RUN \
-  echo "%user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+  echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
   echo "Defaults        lecture = never" >> /etc/sudoers.d/privacy
 
+
+ENV  MAVEN_VERSION=3.3.9
+
+RUN \
+  zypper in --no-confirm wget tar
+
+RUN \
+    cd /tmp && \
+    wget -q "http://apache.ip-connect.vn.ua/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz"
+
+RUN \
+    cd /tmp && \
+    tar -xzf "/tmp/apache-maven-$MAVEN_VERSION-bin.tar.gz"
+
+RUN \
+    mv "/tmp/apache-maven-$MAVEN_VERSION" "/usr/lib"
+
+RUN \
+    rm -rf "/tmp/"*
+
 USER user
+
+ENV JAVA_HOME=/etc/alternatives/java_sdk
+
+ENV M2_HOME=/usr/lib/apache-maven-$MAVEN_VERSION
+
+ENV PATH=${PATH}:${JAVA_HOME}/bin:${M2_HOME}/bin
 
 WORKDIR /projects
 
