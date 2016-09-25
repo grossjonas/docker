@@ -171,4 +171,6 @@ So far everything works as expected.
 
 But some things bother me ... for example the glibc. Let's try without it.
 
-And we need it for java?
+And we need it for java ... some java by che.
+
+Maybe we could use openjdk instead ... let's try this tomorrow.
