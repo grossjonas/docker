@@ -4,25 +4,6 @@ RUN zypper refresh
 
 RUN zypper install --no-confirm vim
 
-RUN zypper --non-interactive install --auto-agree-with-licenses \
-  libzmq5 \
-  python \
-  python-Jinja2 \
-  python-M2Crypto \
-  python-PyYAML \
-  python-msgpack-python \
-  python-pycrypto \
-  python-pyzmq \
-  python-xml \
-  python-requests \
-  aaa_base
-
 RUN zypper install --no-confirm salt-master salt-minion
 
-#RUN \
-#  dbus-launch && \
-#  /usr/lib/systemd --system & && \
-#  systemctl enable salt-master.service && \
-#  systemctl start salt-master.service && \
-#  systemctl enable salt-minion.service && \
-#  systemctl start salt-minion.service
+CMD salt-master
