@@ -2,8 +2,18 @@ FROM opensuse
 
 RUN zypper refresh
 
-RUN zypper install --no-confirm vim
+RUN zypper install --no-confirm salt-master salt-minion dmidecode
 
-RUN zypper install --no-confirm salt-master salt-minion
+RUN echo "master: localhost" >> /etc/salt/minion
 
-CMD salt-master
+CMD salt-master -d && salt-minion -d
+
+# ```$ salt-key -L```
+# until ```unaccepted key``` shows up
+# ```$ salt-key -A```
+# to accept all keys
+# ```$ salt '*' pkg.install vim```
+# install e.g. vim
+# ```$ vim```
+# test if it is available
+
