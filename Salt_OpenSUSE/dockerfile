@@ -2,27 +2,18 @@ FROM opensuse
 
 RUN zypper refresh
 
-RUN zypper install --no-confirm vim
+RUN zypper install --no-confirm salt-master salt-minion dmidecode
 
-RUN zypper --non-interactive install --auto-agree-with-licenses \
-  libzmq5 \
-  python \
-  python-Jinja2 \
-  python-M2Crypto \
-  python-PyYAML \
-  python-msgpack-python \
-  python-pycrypto \
-  python-pyzmq \
-  python-xml \
-  python-requests \
-  aaa_base
+RUN echo "master: localhost" >> /etc/salt/minion
 
-RUN zypper install --no-confirm salt-master salt-minion
+CMD salt-master -d && salt-minion -d
 
-#RUN \
-#  dbus-launch && \
-#  /usr/lib/systemd --system & && \
-#  systemctl enable salt-master.service && \
-#  systemctl start salt-master.service && \
-#  systemctl enable salt-minion.service && \
-#  systemctl start salt-minion.service
+# ```$ salt-key -L```
+# until ```unaccepted key``` shows up
+# ```$ salt-key -A```
+# to accept all keys
+# ```$ salt '*' pkg.install vim```
+# install e.g. vim
+# ```$ vim```
+# test if it is available
+
